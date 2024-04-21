@@ -46,7 +46,7 @@ export const metadata: Metadata = {
 export default async function Home() {
   const res = await fetch(
     "https://data.stortinget.no/eksport/regjering?format=json",
-    { next: { revalidate: 3600 } },
+    { cache: "no-store" },
   ).then((res) => res.json());
 
   const medlemer: Regjeringsmedlem[] = res.regjeringsmedlemmer_liste;
@@ -80,14 +80,6 @@ export default async function Home() {
               <div className="text-sm">{m.parti.navn}</div>
             </div>
           );
-        })}
-      </div>
-      <div className="text-center m-2">
-        Sist oppdatert:{" "}
-        {new Date().toLocaleString("no", {
-          dateStyle: "long",
-          timeStyle: "short",
-          timeZone: "Europe/Oslo",
         })}
       </div>
     </div>
